@@ -1,24 +1,3 @@
-<?php
-error_reporting(E_ALL & ~E_NOTICE);
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-    require(__DIR__ . '/vendor/autoload.php');
-}
-use Helge\Loader\JsonLoader;
-use Helge\Client\SimpleWhoisClient;
-use Helge\Service\DomainAvailability;
-$regStatus=[0=>"Already Registered",1 =>'Yes Available for Registration'];
-if (!empty($_POST['domain_name'])){
-    $tld =  $_POST['tld'];
-    if(empty($tld)){
-        $tld= '.com';
-    }
-    $whoisClient = new SimpleWhoisClient();
-    $dataLoader = new JsonLoader("vendor/helgesverre/domain-availability/src/data/servers.json");
-    $service = new DomainAvailability($whoisClient, $dataLoader);
-    $query = trim($_POST['domain_name']).$tld;
-    $status = $service->isAvailable($query);
-}
-?>
 <!DOCTYPE html>
 <html>
 <head>
